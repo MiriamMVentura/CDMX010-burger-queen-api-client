@@ -4,6 +4,7 @@ import './Cart.css'
 import ProductCard from './ProductCard'
 
 const Cart = ({cart, setCart, product}) => {
+
   // definiendo variables para hacer la suma
   const productPrice = cart.reduce((subtotal, currentProduct) => subtotal + currentProduct.price * currentProduct.qty, 0);
   const taxPrice = productPrice * 0.16;
@@ -11,9 +12,34 @@ const Cart = ({cart, setCart, product}) => {
 
   const createOrder = () => {
     // console.log("product inside create Order", products)
-    const userObject = JSON.parse(localStorage.getItem('access'));
-    console.log('user Id', userObject.user._id);
+    // const userObject = JSON.parse(localStorage.getItem('access'));
+    localStorage.setItem('pedido', JSON.stringify(cart));
+    console.log('pedido', cart);
+
   }
+
+  const handleSubmit= (e)=>{
+    e.preventDefault()
+    axios.post('http://localhost:8080/order', {
+      id_user,
+      client,
+      productid,
+      qty
+    }).then(response => {
+      console.log('axios post order response:', response)
+      if (response.data.status = 200){
+        console.log('axios orden:', response.data)
+        localStorage.setItem('orden creada', JSON.stringify(response.data))
+      }else {
+        console.log('error, no pude hacer pedido')
+      }
+      authHeader()
+    })
+  }
+
+
+
+
 
 
   return (
@@ -40,8 +66,8 @@ const Cart = ({cart, setCart, product}) => {
             </Fragment>
           )}
           {cart.length > 0 &&(
-            <div>
-              <button onClick={() => createOrder(product)}>Hacer pedido</button>
+            <div >
+              <button type= 'submit' onClick={() => createOrder(product)}>Hacer pedido</button>
             </div>
           )}
 

@@ -3,9 +3,9 @@ import './ProductCard.css'
 
 const ProductCard = ({ product, products, cart, setCart }) => {
   // --para comprobar que traemos los items iterados
-  console.log('product:', product)
+  // console.log('product:', product)
+  // console.log(cart)
   const {name, price, _id, image} = product;
-  const {product, setProduct} =
 
   // -- Función para agregar Items
   // // -- Función para aumentar cantidad de Items en el carrito
@@ -15,8 +15,7 @@ const ProductCard = ({ product, products, cart, setCart }) => {
     if(matchIdAdd){
       setCart(cart.map((item)=> item._id === product._id ? {...matchIdAdd, qty: matchIdAdd.qty + 1 } : item))
     } else {
-      setCart([...cart, { ...product, qty:1 }]);
-      // localStorage.setItem('matchIdAdd', JSON.stringify(matchIdAdd));
+      setCart([...cart, { ...product, qty:1 }])
     }
   }
 
