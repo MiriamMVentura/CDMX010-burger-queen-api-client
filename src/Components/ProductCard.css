@@ -24,3 +24,8 @@
 .disabled {
   opacity: 0.3;
 }
+
+#product-photosA {
+  width: 200%;
+  align-self: center;
+}

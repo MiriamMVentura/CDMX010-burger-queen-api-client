@@ -4,16 +4,18 @@ import axios from 'axios';
 
 import ProductCard from '../Components/ProductCard'
 import Cart from '../Components/Cart';
+import NavBar from '../Components/NavBar';
 
 const userToken = JSON.parse(localStorage.getItem('access'));
 
 const Orders = (props) => {
   const [products, setProducts]=useState()
   const [cart, setCart] = useState([]);
+  const [navBar, setNavBar] = useState();
 
   // -- petición a la api al endpoint Products
   const getDataProducts = () => {
-    return axios.get('http://localhost:8080/products/', {
+    return axios.get('http://localhost:8080/products?limit=15&page=1', {
       headers: { Authorization: `Bearer ${userToken.token}` },
     }).then((response) => {
       const itemsData = response.data;
@@ -34,6 +36,13 @@ const Orders = (props) => {
   return (
     <div className='order-container'>
       <div className='menu-container'>
+        <NavBar
+        navBar= {navBar}
+        setNavBar={setNavBar}
+        // product={product}
+        products= {products}
+        setProducts={setProducts}
+        />
       {/* con este operador validamos que el state no esté vacio  */}
         {products&& products.result.map(product =>
           <ProductCard
